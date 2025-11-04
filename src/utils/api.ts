@@ -1,8 +1,11 @@
 import axios, { AxiosInstance, InternalAxiosRequestConfig } from 'axios';
 import type { ApiResponse } from '@/types';
 
+// Use relative URL in development to go through vite proxy (handles SSL better)
+// In production, use full URL from env or default
 const API_BASE_URL =
-  import.meta.env.VITE_API_URL || 'http://192.168.50.107:6510/api';
+  import.meta.env.VITE_API_URL || 
+  (import.meta.env.DEV ? '/api' : 'https://backendtracker.thrivebrands.in/api');
   
 
 class ApiClient {

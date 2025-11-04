@@ -15,8 +15,11 @@ export default defineConfig({
     port: 3000,
     proxy: {
       '/api': {
-        target: 'http://192.168.50.107:6510',
+       // target: 'http://192.168.50.107:6510',
+        target: 'https://backendtracker.thrivebrands.in',
         changeOrigin: true,
+        secure: true, // SSL certificate is now properly configured
+        rewrite: (path) => path.replace(/^\/api/, '/api'),
       },
     },
   },
