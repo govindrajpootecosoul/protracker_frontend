@@ -26,8 +26,8 @@ npm run dev
 ```
 
 The app will be available at:
-- **Local:** http://localhost:3000
-- **Network:** http://192.168.50.107:3000
+- **Local:** http://localhost:6511
+- **Network:** http://192.168.50.107:6511
 
 ### 4. Build for Production
 
@@ -73,14 +73,14 @@ The Vite dev server is configured to listen on `0.0.0.0` to allow access from ot
 **Windows Firewall Setup:**
 To allow external access, run PowerShell as Administrator:
 ```powershell
-New-NetFirewallRule -DisplayName "Allow Project Tracker Frontend Port 3000" -Direction Inbound -Protocol TCP -LocalPort 3000 -Action Allow -Profile Any
+New-NetFirewallRule -DisplayName "Allow Project Tracker Frontend Port 6511" -Direction Inbound -Protocol TCP -LocalPort 6511 -Action Allow -Profile Any
 ```
 
 ## Troubleshooting
 
 ### Cannot Access from Another Device
-1. Check if frontend is running: `http://localhost:3000`
-2. Verify Windows Firewall rules for port 3000
+1. Check if frontend is running: `http://localhost:6511`
+2. Verify Windows Firewall rules for port 6511
 3. Ensure both devices are on the same network
 4. Check backend is accessible: `http://192.168.50.107:6510/health`
 

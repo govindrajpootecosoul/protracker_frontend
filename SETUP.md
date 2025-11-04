@@ -26,7 +26,7 @@
    npm run dev
    ```
 
-The frontend will be available at `http://localhost:3000`
+The frontend will be available at `http://localhost:6511`
 
 ## Features Implemented
 
@@ -173,8 +173,8 @@ Output will be in `dist/` directory.
 
 ## Troubleshooting
 
-**Port 3000 already in use?**
-- Change port in `vite.config.ts`
+**Port 6511 already in use?**
+- Change port in `vite.config.ts` (currently set to 6511)
 
 **API connection issues?**
 - Check backend is running on port 5000
