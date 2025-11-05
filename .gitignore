@@ -28,3 +28,7 @@ dist-ssr
 .env.local
 .env.*.local
 
+# Compiled JavaScript files in src (should not exist)
+src/**/*.js
+src/**/*.js.map
+
