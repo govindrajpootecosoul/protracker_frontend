@@ -56,7 +56,7 @@ export const ProjectDetail = () => {
         department: project.department,
         projectId: id,
       });
-      return response.data?.data || [];
+      return (response as any)?.data?.data || (response as any)?.data || [];
     },
     enabled: !!project?.company && !!project?.department && !!id,
   });
@@ -90,7 +90,7 @@ export const ProjectDetail = () => {
             <p className="text-gray-600 dark:text-gray-400 mt-2">{project?.description}</p>
             {project?.createdBy && (
               <p className="text-sm text-gray-500 dark:text-gray-500 mt-1">
-                Created by: <span className="font-medium">{project.createdBy?.name || 'Unknown'}</span>
+                Created by: <span className="font-medium">{(typeof project.createdBy === 'object' && project.createdBy ? project.createdBy.name : 'Unknown') || 'Unknown'}</span>
               </p>
             )}
           </div>

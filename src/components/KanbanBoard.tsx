@@ -67,7 +67,7 @@ export const KanbanBoard = ({ tasks, projectId, onEditTask, filterStatus }: Kanb
         queryClient.invalidateQueries({ queryKey: ['project', projectId] });
       }
     },
-    onError: (err: any, variables, context) => {
+    onError: (err: any, _variables, context) => {
       console.error('KanbanBoard → Status update failed:', err, err?.response?.data);
       alert(err?.response?.data?.message || err?.message || 'Failed to update status');
       // If the mutation fails, roll back

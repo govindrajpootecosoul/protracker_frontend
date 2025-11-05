@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
-import { Mail, Send, Building2, User, Users, FileText, MessageSquare, FolderKanban, Briefcase } from 'lucide-react';
+import { Send, Building2, User, Users, FileText, MessageSquare, FolderKanban, Briefcase } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { taskService } from '@/services/taskService';
 import { departmentService } from '@/services/departmentService';
@@ -88,8 +88,8 @@ export const SendTasksEmail = () => {
     enabled: isAdmin && !!user?.department,
   });
 
-  const adminEmployees = employeesResponse || [];
-  const availableEmployees = isSuperadmin ? (departmentEmployees || []) : adminEmployees;
+  const adminEmployees = (employeesResponse || []) as any[];
+  const availableEmployees = (isSuperadmin ? (departmentEmployees || []) : adminEmployees) as any[];
 
   const validateEmail = (email: string) => {
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;

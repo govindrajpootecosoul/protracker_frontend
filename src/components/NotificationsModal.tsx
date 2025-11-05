@@ -2,7 +2,6 @@ import { useEffect, useState } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { X, Bell } from 'lucide-react';
 import { GlassCard } from './GlassCard';
-import { useThemeStore } from '@/store/themeStore';
 import { cn } from '@/utils/cn';
 import { authService } from '@/services/authService';
 import { useAuthStore } from '@/store/authStore';
@@ -12,7 +11,6 @@ interface NotificationsModalProps {
 }
 
 export const NotificationsModal = ({ onClose }: NotificationsModalProps) => {
-  const { isDark } = useThemeStore();
   const setAuth = useAuthStore((s) => s.setAuth);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');

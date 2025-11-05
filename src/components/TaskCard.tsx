@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { taskService } from '@/services/taskService';
 import { cn } from '@/utils/cn';
 import { format } from 'date-fns';
-import type { Task, User } from '@/types';
+import type { Task } from '@/types';
 
 interface TaskCardProps {
   task: Task;
@@ -75,7 +75,7 @@ export const TaskCard = ({ task, onEdit, projectId }: TaskCardProps) => {
         queryClient.invalidateQueries({ queryKey: ['project', projectId] });
       }
     },
-    onError: (err: any, newStatus, context) => {
+    onError: (err: any, _newStatus, context) => {
       console.error('TaskCard → Status update failed:', err, err?.response?.data);
       alert(err?.response?.data?.message || err?.message || 'Failed to update status');
       // If the mutation fails, use the context returned from onMutate to roll back

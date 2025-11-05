@@ -8,13 +8,11 @@ import { useAuthStore } from '@/store/authStore';
 import { useQuery } from '@tanstack/react-query';
 import { employeeService } from '@/services/employeeService';
 import { InviteModal } from '@/components/InviteModal';
-import { useThemeStore } from '@/store/themeStore';
 
 export const TeamManagement = () => {
   const [isInviting, setIsInviting] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const user = useAuthStore((s) => s.user);
-  const { isDark } = useThemeStore();
   const canInvite = user?.role === 'admin' || user?.role === 'superadmin';
 
   // Fetch users filtered by company and department (same logic as brands/projects)
@@ -50,28 +48,49 @@ export const TeamManagement = () => {
 
   const employees = employeesResponse || [];
 
-  const handleInvite = async (email: string, targetType: 'brand' | 'project', targetId: string) => {
+  const handleInvite = async (email: string, brandIds: string[], projectIds: string[]) => {
     try {
       setIsInviting(true);
-      const response = await authService.invite({ email, targetType, targetId });
-      const responseData = (response as any)?.data;
       
-      if (responseData?.granted) {
-        alert(`Access granted to ${email} successfully!`);
-      } else if (responseData?.emailSent) {
-        alert('Invitation sent successfully!');
-      } else if (responseData?.inviteUrl) {
-        // Email sending failed, show the invite URL
-        const shouldCopy = confirm(
-          `Invitation created but email sending failed.\n\nInvite URL: ${responseData.inviteUrl}\n\nWould you like to copy this link to clipboard?`
-        );
-        if (shouldCopy) {
-          navigator.clipboard.writeText(responseData.inviteUrl);
-          alert('Invite link copied to clipboard!');
+      // Invite to each brand
+      for (const brandId of brandIds) {
+        try {
+          const response = await authService.invite({ email, targetType: 'brand', targetId: brandId });
+          const responseData = (response as any)?.data;
+          
+          if (responseData?.granted) {
+            console.log(`Access granted to ${email} for brand ${brandId}`);
+          } else if (responseData?.emailSent) {
+            console.log(`Invitation sent to ${email} for brand ${brandId}`);
+          } else if (responseData?.inviteUrl) {
+            console.warn(`Invitation created but email sending failed for brand ${brandId}: ${responseData.inviteUrl}`);
+          }
+        } catch (e: any) {
+          console.error(`Error inviting to brand ${brandId}:`, e);
         }
-      } else {
-        alert((response as any)?.message || 'Invitation sent successfully!');
       }
+      
+      // Invite to each project (if not empty array, empty array means all projects)
+      if (projectIds.length > 0) {
+        for (const projectId of projectIds) {
+          try {
+            const response = await authService.invite({ email, targetType: 'project', targetId: projectId });
+            const responseData = (response as any)?.data;
+            
+            if (responseData?.granted) {
+              console.log(`Access granted to ${email} for project ${projectId}`);
+            } else if (responseData?.emailSent) {
+              console.log(`Invitation sent to ${email} for project ${projectId}`);
+            } else if (responseData?.inviteUrl) {
+              console.warn(`Invitation created but email sending failed for project ${projectId}: ${responseData.inviteUrl}`);
+            }
+          } catch (e: any) {
+            console.error(`Error inviting to project ${projectId}:`, e);
+          }
+        }
+      }
+      
+      alert('Invitation(s) processed successfully!');
       setIsModalOpen(false);
     } catch (e: any) {
       console.error('Invite error:', e);

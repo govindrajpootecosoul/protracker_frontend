@@ -39,6 +39,9 @@ export interface Project {
   startDate?: string;
   endDate?: string;
   tasks?: Task[];
+  company?: string;
+  department?: string;
+  createdBy?: string | User;
   createdAt?: string;
   updatedAt?: string;
 }

@@ -72,9 +72,8 @@ export const EmailModal = ({ isOpen, onClose, onSend, isLoading = false }: Email
     return emailRegex.test(email);
   };
 
-  const allValid = (emails: string[]) => emails.every((e) => validateEmail(e));
-
-  const employees = employeesResponse || [];
+  const employees = (employeesResponse || []) as any[];
+  const departmentsArray = (departments || []) as any[];
 
   const handleSend = async () => {
     const newErrors: { to?: string; cc?: string } = {};
@@ -190,12 +189,12 @@ export const EmailModal = ({ isOpen, onClose, onSend, isLoading = false }: Email
                     >
                       <option value="">All Departments</option>
                       {departmentsLoading && <option disabled>Loading departments...</option>}
-                      {!departmentsLoading && Array.isArray(departments) && departments.length > 0 && departments.map((dept: any) => (
+                      {!departmentsLoading && Array.isArray(departmentsArray) && departmentsArray.length > 0 && departmentsArray.map((dept: any) => (
                         <option key={dept._id || dept.name} value={dept.name || dept._id}>
                           {dept.name}
                         </option>
                       ))}
-                      {!departmentsLoading && (!departments || departments.length === 0) && (
+                      {!departmentsLoading && (!departmentsArray || departmentsArray.length === 0) && (
                         <option disabled>No departments found</option>
                       )}
                     </select>
